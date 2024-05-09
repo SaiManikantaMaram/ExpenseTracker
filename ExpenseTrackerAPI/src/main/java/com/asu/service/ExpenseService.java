@@ -1,5 +1,6 @@
 package com.asu.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,15 @@ public class ExpenseService implements IExpenseService {
 	@Override
 	public List<Expense> fetchAllName(String keyword, Pageable page) {
 		return repo.findByNameContaining(keyword, page);
+	}
+
+	@Override
+	public List<Expense> fetchByDateBetween(Date startDate, Date endDate, Pageable page) {
+		if (startDate == null)
+			startDate = new Date(0);
+		if (endDate == null)
+			endDate = new Date(System.currentTimeMillis());
+		return repo.findByDateBetween(startDate, endDate, page);
 	}
 
 }

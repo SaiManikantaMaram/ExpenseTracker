@@ -1,5 +1,6 @@
 package com.asu.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +70,9 @@ public class ExpenseController {
 		return service.fetchAllName(keyword, page);
 	}
 
+	@GetMapping("/getbydate")
+	public List<Expense> fetchByDate(@RequestParam(value = "Start", required = false) Date startDate,
+			@RequestParam(value = "End", required = false) Date endDate, Pageable page) {
+		return service.fetchByDateBetween(startDate, endDate, page);
+	}
 }
