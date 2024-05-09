@@ -2,7 +2,13 @@ package com.asu.model;
 
 import java.sql.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,12 +16,36 @@ import jakarta.persistence.Table;
 @Table(name = "tbl_expense")
 public class Expense {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String expense_name;
 	private String description;
 	private double expense_amount;
 	private String category;
 	private Date date;
+	
+	public Date getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+
+	public Date getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	@CreationTimestamp
+	@Column(nullable=false,updatable=false)
+	private Date created_at;
+	
+	@UpdateTimestamp
+	private Date updated_at;
 
 	public Expense() {
 	}
@@ -28,6 +58,23 @@ public class Expense {
 		this.expense_amount = expense_amount;
 		this.category = category;
 		this.date = date;
+	}
+	
+	
+
+	public Expense(String expense_name, String description, double expense_amount, String category, Date date) {
+		super();
+		this.expense_name = expense_name;
+		this.description = description;
+		this.expense_amount = expense_amount;
+		this.category = category;
+		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "id=" + id + ", expense_name=" + expense_name + ", description=" + description
+				+ ", expense_amount=" + expense_amount + ", category=" + category + ", date=" + date;
 	}
 
 	public int getId() {
