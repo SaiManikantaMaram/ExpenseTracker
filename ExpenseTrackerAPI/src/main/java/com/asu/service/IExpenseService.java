@@ -17,4 +17,7 @@ public interface IExpenseService {
 
 	public Expense updateData(int id, Expense exp);
 
+	public List<Expense> fetchAllByCategory(String Category, Pageable page);
+	public List<Expense> fetchAllName(String keyword, Pageable page);
+
 }

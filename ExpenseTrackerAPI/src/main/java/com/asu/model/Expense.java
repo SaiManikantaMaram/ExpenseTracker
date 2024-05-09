@@ -11,6 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tbl_expense")
@@ -18,12 +22,19 @@ public class Expense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String expense_name;
+
+	@NotBlank(message = "Expense Name must not be Blank")
+	@Size(min = 3, message = "Expense Name must be atleast 3 Characters")
+	@Column(name="expense_name")
+	private String name;
 	private String description;
+	@NotNull(message = "Expense Amount must not be Empty")
 	private double expense_amount;
+	@NotEmpty(message = "Expense Category must not be Empty")
 	private String category;
+	@NotNull(message = "Expense Date must not be Empty")
 	private Date date;
-	
+
 	public Date getCreated_at() {
 		return created_at;
 	}
@@ -41,9 +52,9 @@ public class Expense {
 	}
 
 	@CreationTimestamp
-	@Column(nullable=false,updatable=false)
+	@Column(nullable = false, updatable = false)
 	private Date created_at;
-	
+
 	@UpdateTimestamp
 	private Date updated_at;
 
@@ -53,18 +64,16 @@ public class Expense {
 	public Expense(int id, String expense_name, String description, double expense_amount, String category, Date date) {
 		super();
 		this.id = id;
-		this.expense_name = expense_name;
+		this.name = expense_name;
 		this.description = description;
 		this.expense_amount = expense_amount;
 		this.category = category;
 		this.date = date;
 	}
-	
-	
 
 	public Expense(String expense_name, String description, double expense_amount, String category, Date date) {
 		super();
-		this.expense_name = expense_name;
+		this.name = expense_name;
 		this.description = description;
 		this.expense_amount = expense_amount;
 		this.category = category;
@@ -73,8 +82,8 @@ public class Expense {
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", expense_name=" + expense_name + ", description=" + description
-				+ ", expense_amount=" + expense_amount + ", category=" + category + ", date=" + date;
+		return "id=" + id + ", expense_name=" + name + ", description=" + description + ", expense_amount="
+				+ expense_amount + ", category=" + category + ", date=" + date;
 	}
 
 	public int getId() {
@@ -86,11 +95,11 @@ public class Expense {
 	}
 
 	public String getExpense_name() {
-		return expense_name;
+		return name;
 	}
 
 	public void setExpense_name(String expense_name) {
-		this.expense_name = expense_name;
+		this.name = expense_name;
 	}
 
 	public String getDescription() {

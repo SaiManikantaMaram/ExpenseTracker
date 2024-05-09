@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.asu.model.Expense;
 import com.asu.service.IExpenseService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/expense")
 public class ExpenseController {
@@ -28,32 +30,43 @@ public class ExpenseController {
 		return "Hello World";
 	}
 
-	@GetMapping("/allexpenses")
+	@GetMapping("/fetchall")
 	public List<Expense> getAll(Pageable page) {
 		return service.fetchAll(page);
 	}
 
-	@GetMapping("/expenseById")
+	@GetMapping("/fetch")
 	public Expense getById(@RequestParam("ExpenseId") int id) {
 		return service.getById(id);
 	}
 
-	@GetMapping("/deleteById")
+	@GetMapping("/delete")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public String removeById(@RequestParam("ExpenseId") int id) {
 		return service.removeById(id);
 
 	}
 
-	@GetMapping("/saveData")
+	@GetMapping("/save")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public Expense saveData(@RequestBody Expense exp) {
+	public Expense saveData(@Valid @RequestBody Expense exp) {
 
 		return service.saveData(exp);
 	}
 
-	@GetMapping("/updateData/{identity}")
+	@GetMapping("/update/{identity}")
 	public Expense updateData(@PathVariable("identity") int id, @RequestBody Expense exp) {
 		return service.updateData(id, exp);
 	}
+
+	@GetMapping("/getbycategory")
+	public List<Expense> fetchAllBycategory(@RequestParam("cat") String category, Pageable page) {
+		return service.fetchAllByCategory(category, page);
+	}
+
+	@GetMapping("/getbyname")
+	public List<Expense> fetchAllByName(@RequestParam("Name") String keyword, Pageable page) {
+		return service.fetchAllName(keyword, page);
+	}
+
 }

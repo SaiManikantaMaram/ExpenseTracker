@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.asu.Exceptions.ExpenseNotFoundException;
 import com.asu.model.Expense;
 import com.asu.repository.IExpenseRepo;
 
@@ -28,7 +29,7 @@ public class ExpenseService implements IExpenseService {
 		if (result.isPresent()) {
 			return result.get();
 		}
-		throw new RuntimeException("Expense not Found with Id " + id);
+		throw new ExpenseNotFoundException("Expense not Found with Id " + id);
 	}
 
 	@Override
@@ -63,6 +64,16 @@ public class ExpenseService implements IExpenseService {
 		updatedexpense.setDate(updatedexpense.getDate() != null ? updatedexpense.getDate() : expense.getDate());
 
 		return repo.save(updatedexpense);
+	}
+
+	@Override
+	public List<Expense> fetchAllByCategory(String Category, Pageable page) {
+		return repo.findByCategory(Category, page);
+	}
+
+	@Override
+	public List<Expense> fetchAllName(String keyword, Pageable page) {
+		return repo.findByNameContaining(keyword, page);
 	}
 
 }
