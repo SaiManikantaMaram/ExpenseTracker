@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asu.model.User;
 import com.asu.model.RequestUser;
+import com.asu.model.User;
 import com.asu.service.IUserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/user")
@@ -19,7 +21,7 @@ public class UserController {
     private IUserService ser;
 
     @PostMapping("/create")
-    public User createUser(@RequestBody RequestUser user,Pageable page)
+    public User createUser(@Valid @RequestBody RequestUser user,Pageable page)
     {
       
         return ser.createUser(user,page);

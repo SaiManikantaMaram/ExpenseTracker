@@ -28,7 +28,6 @@ public class Expense {
 	@Column(name="expense_name")
 	private String name;
 	private String description;
-	@NotNull(message = "Expense Amount must not be Empty")
 	private double expense_amount;
 	@NotEmpty(message = "Expense Category must not be Empty")
 	private String category;
