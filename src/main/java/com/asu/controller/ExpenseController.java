@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,21 +42,21 @@ public class ExpenseController {
 		return service.getById(id);
 	}
 
-	@GetMapping("/delete")
+	@PostMapping("/delete")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public String removeById(@RequestParam("ExpenseId") int id) {
 		return service.removeById(id);
 
 	}
 
-	@GetMapping("/save")
+	@PostMapping("/save")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Expense saveData(@Valid @RequestBody Expense exp) {
 
 		return service.saveData(exp);
 	}
 
-	@GetMapping("/update/{identity}")
+	@PostMapping("/update/{identity}")
 	public Expense updateData(@PathVariable("identity") int id, @RequestBody Expense exp) {
 		return service.updateData(id, exp);
 	}
