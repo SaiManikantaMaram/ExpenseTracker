@@ -31,6 +31,15 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ErrorObject>(eo, HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(ItemExistsException.class)
+	public ResponseEntity<ErrorObject> handleItemExistsException(ItemExistsException e) {
+		ErrorObject eo = new ErrorObject();
+		eo.setMessage(e.getMessage());
+		eo.setStatusCode(HttpStatus.CONFLICT.value());
+		eo.setTimeStamp(new Date());
+		return new ResponseEntity<>(eo, HttpStatus.CONFLICT);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorObject> handleGeneralException(Exception e) {
 		ErrorObject eo = new ErrorObject();
@@ -38,6 +47,15 @@ public class GlobalExceptionHandler {
 		eo.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		eo.setTimeStamp(new Date());
 		return new ResponseEntity<>(eo, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ErrorObject> handleUserNotFoundException(UserNotFoundException e) {
+		ErrorObject er = new ErrorObject();
+		er.setMessage(e.getMessage());
+		er.setStatusCode(HttpStatus.NOT_FOUND.value());
+		er.setTimeStamp(new Date(System.currentTimeMillis()));
+		return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
 	}
 
 	/*
