@@ -1,8 +1,13 @@
 package com.asu.repository;
 
-import com.asu.model.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IUserRepo extends JpaRepository<User,Integer>{
+import com.asu.model.UserModel;
+
+public interface IUserRepo extends JpaRepository<UserModel, Integer> {
     public Boolean existsByEmail(String email);
+
+    public Optional<UserModel> findByEmail(String email);
 }

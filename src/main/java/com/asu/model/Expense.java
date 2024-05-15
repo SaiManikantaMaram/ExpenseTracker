@@ -3,13 +3,20 @@ package com.asu.model;
 import java.sql.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,7 +32,7 @@ public class Expense {
 
 	@NotBlank(message = "Expense Name must not be Blank")
 	@Size(min = 3, message = "Expense Name must be atleast 3 Characters")
-	@Column(name="expense_name")
+	@Column(name = "expense_name")
 	private String name;
 	private String description;
 	private double expense_amount;
@@ -33,6 +40,16 @@ public class Expense {
 	private String category;
 	@NotNull(message = "Expense Date must not be Empty")
 	private Date date;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private UserModel user;
+
+	public void setUserModel(UserModel user) {
+		this.user = user;
+	}
 
 	public Date getCreated_at() {
 		return created_at;

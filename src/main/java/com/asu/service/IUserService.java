@@ -5,17 +5,19 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.asu.model.RequestUser;
-import com.asu.model.User;
+import com.asu.model.UserModel;
 
 public interface IUserService {
 
-    public User createUser(RequestUser user, Pageable page);
+    public UserModel createUser(RequestUser user, Pageable page);
 
-    public User readUser(int id);
+    public UserModel readUser(int id);
 
-    public List<User> readUsers();
+    public List<UserModel> readUsers();
 
-    public User updateUser(int id, RequestUser user);
+    public UserModel updateUser(int id, RequestUser user);
 
     public String deleteUser(int id);
+
+    public UserModel getLoggedInUser();
 }

@@ -15,9 +15,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="tbl_users")
+@Table(name = "tbl_users")
 @Data
-public class User {
+public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,9 @@ public class User {
     private int age;
 
     @CreationTimestamp
-    @Column(nullable=false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private Date created_at;
     @UpdateTimestamp
     private Date updated_at;
-    
+
 }
